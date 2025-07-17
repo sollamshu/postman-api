@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "2acf7d40-05af-44e2-b1e1-e5605018f45e",
+		"name": "Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2000207",
+		"_collection_link": "https://orange-comet-7719.postman.co/workspace/reqres.in~f1aca8ce-9d3d-48d1-9821-de31880b5591/collection/2000207-2acf7d40-05af-44e2-b1e1-e5605018f45e?action=share&source=collection_link&creator=2000207"
+	},
+	"item": [
+		{
+			"name": "GET /users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"const responseJson = pm.response.json();",
+							"",
+							"pm.test(\"Verify response contains 'data' array\", function () {",
+							"    pm.expect(responseJson).to.have.property('data');",
+							"});",
+							"pm.test(\"Verify response contains elements in 'data' array\", function () {",
+							"    pm.expect(responseJson.data).to.be.an('array').and.to.have.lengthOf.above(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{domain}}/users",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
