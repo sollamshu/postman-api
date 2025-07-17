@@ -1,0 +1,41 @@
+name: Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "postman-api-ci"
+        required: false
+        type: boolean
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman collection
+        run: newman run collections/Collection.postman_collection.json -e environments/Environment.postman_environment.json -r htmlextra --reporter-htmlextra-export test-results/postman-report.html
+
+      - name: Generate report
+        if: always()
+        run: |
+          npm install -g newman-reporter-htmlextra
+          newman run collections/Collection.postman_collection.json -e environments/Environment.postman_environment.json -r htmlextra --reporter-htmlextra-export test-results/postman-report.html
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-report
+          path: postman-report.html
+          retention-days: 30
