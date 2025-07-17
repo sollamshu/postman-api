@@ -37,5 +37,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: postman-report
-          path: postman-report.html
+          path: test-results/
           retention-days: 30
