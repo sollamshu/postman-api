@@ -25,7 +25,7 @@ jobs:
         run: npm install -g newman
 
       - name: Run Postman collection
-        run: newman run collections/Collection.postman_collection.json -e environments/Environment.postman_environment.json -r htmlextra --reporter-htmlextra-export test-results/postman-report.html
+        run: newman run collections/Collection.postman_collection.json -e environments/Environment.postman_environment.json
 
       - name: Generate report
         if: always()
